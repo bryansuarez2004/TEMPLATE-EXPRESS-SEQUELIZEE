@@ -8,6 +8,7 @@ const getAll = catchError(async(req, res) => {
     return res.json(results);
 });
 
+
 const getOne = catchError(async(req, res) =>{
    
         const { id } = req.params;

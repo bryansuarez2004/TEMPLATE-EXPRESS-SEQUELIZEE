@@ -3,6 +3,11 @@ const sequelize = require('../utils/connection');
 
 
 const Session = sequelize.define('session', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true
+  },
     date: {
         type: DataTypes.DATEONLY,
       allowNull: false,

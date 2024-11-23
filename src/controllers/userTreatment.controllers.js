@@ -1,13 +1,24 @@
 const catchError = require('../utils/catchError');
 const User = require('../models/User');
 const Treatment = require('../models/Treatment');
-const UserTreatment = require('../models/UserTreatment')
+const UserTreatment = require('../models/UserTreatment');
+const Session = require('../models/Session');
+
 
 
 const getAll = catchError(async(req, res) => {
-    const results = await UserTreatment.findAll();
+    const results = await UserTreatment.findAll({include:Session});
     return res.json(results);
 });
+
+
+const getOne = catchError(async(req,res) => {
+  const { id } = req.params;
+  const result = await UserTreatment.findByPk(id,{include:Session});
+  if(!result) return res.sendStatus(404);
+  return res.json(result);
+
+})
 
 const getByDate = catchError(async(req, res) =>{
     const { date } = req.params; // Recibir la fecha en el formato 'YYYY-MM-DD'
@@ -30,7 +41,10 @@ const getByUser = catchError(async(req,res) =>{
     const userTreatments = await UserTreatment.findAll({
         where: {
           idUser: idUser
-        }
+        },
+        include:[{
+          model:Session
+        }]
       });
     
       if (userTreatments.length === 0) {
@@ -58,10 +72,14 @@ const create = catchError(async(req,res) =>{
          idUser:user.id,
          nameTreatment:treatment.name,
          idTreatment:treatment.id,
-         price: price || treatment.initPrice // Usar el precio personalizado o el precio por defecto del servicio
+         price: price || treatment.initPrice,
+         
+         // Usar el precio personalizado o el precio por defecto del servicio
        });
 
-       res.status(201).json(nuevoRegistro);
+       const enrichedRegister = {...nuevoRegistro.toJSON(),sessions:[]}
+
+       res.status(201).json(enrichedRegister);
 
 })
 
@@ -77,6 +95,7 @@ const remove = catchError(async(req,res) =>{
 module.exports = {
     getAll,
     create,
+    getOne,
     getByDate,
     getByUser,
     remove

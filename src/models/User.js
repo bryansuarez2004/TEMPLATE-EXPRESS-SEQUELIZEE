@@ -3,6 +3,11 @@ const sequelize = require('../utils/connection');
 
 
 const User = sequelize.define('user', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true
+  },
     fullName: {
       type: DataTypes.STRING,
       allowNull: false,

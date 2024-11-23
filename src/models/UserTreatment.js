@@ -6,13 +6,18 @@ const UserTreatment = sequelize.define(
   "user_treatment",
   
   {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
+    },
     nameUser :{
         type: DataTypes.STRING,
       allowNull: false,
       unique:false
     },
     idUser:{
-        type: DataTypes.INTEGER,
+        type:DataTypes.UUID,
       allowNull: false,
       unique:false
     },
@@ -22,7 +27,7 @@ const UserTreatment = sequelize.define(
       unique:false
     },
     idTreatment : {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         unique:false
     },

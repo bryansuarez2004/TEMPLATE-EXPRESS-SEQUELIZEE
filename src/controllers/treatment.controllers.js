@@ -8,7 +8,7 @@ const getAll = catchError(async(req, res) => {
 });
 
 
-const create = catchError(async(req,res) =>{
+const create = catchError(async(req,res) => {
     const {name,initPrice} = req.body
     console.log(req.body);
     
@@ -31,9 +31,18 @@ const update = catchError(async(req, res) => {
     return res.json(result[1][0]);
 });
 
+const remove = catchError(async(req,res) =>{
+    const { id } = req.params;
+    const result = await Treatment.destroy({ where: {id} });
+    if(!result) return res.sendStatus(404);
+    return res.sendStatus(204);
+
+})
+
 
 module.exports = {
     getAll,
     create,
-    update
+    update,
+    remove
 }

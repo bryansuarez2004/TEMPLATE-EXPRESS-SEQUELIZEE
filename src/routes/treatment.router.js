@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAll, create, update } = require('../controllers/treatment.controllers');
+const { getAll, create, update, remove } = require('../controllers/treatment.controllers');
 
 
 
@@ -12,6 +12,7 @@ treatmentRouter.route('/')
 
 treatmentRouter.route('/:id') 
      .put(update)   
+     .delete(remove)
 
 
 module.exports = treatmentRouter;

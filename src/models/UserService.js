@@ -6,13 +6,18 @@ const UserService = sequelize.define(
   "user_service",
   
   {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
+    },
     nameUser :{
         type: DataTypes.STRING,
       allowNull: false,
       unique:false
     },
     idUser:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
       allowNull: false,
       unique:false
     },
@@ -22,7 +27,7 @@ const UserService = sequelize.define(
       unique:false
     },
     idService : {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         unique:false
     },

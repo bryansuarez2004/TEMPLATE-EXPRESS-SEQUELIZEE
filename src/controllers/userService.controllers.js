@@ -35,7 +35,7 @@ const getByUser = catchError(async(req,res) =>{
     
       if (userServices.length === 0) {
         // Si no se encuentran registros para el idUser especificado
-        return res.status(404).json({ message: `No se encontraron registros para el usuario con ID ${idUser}.` });
+        return res.status(201).json([]);
       }
 
       return res.status(201).json(userServices);
@@ -65,10 +65,18 @@ const create = catchError(async(req,res) =>{
 
 })
 
+const remove = catchError(async(req,res) =>{
+  const { idUser } = req.params;
+  const result = await UserService.destroy({ where: {id:idUser} });
+  if(!result) return res.sendStatus(404);
+  return res.sendStatus(204);
+
+})
 
 module.exports = {
     getAll,
     create,
     getByDate,
-    getByUser
+    getByUser,
+    remove
 }
